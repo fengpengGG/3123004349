@@ -1,0 +1,14 @@
+﻿  main.cpp
+C:\Users\feng-peng\Desktop\c_code\PaperCheck\PaperCheck\TextPreprocess.h(22,27): warning C4018: “<”: 有符号/无符号不匹配
+  (编译源文件“main.cpp”)
+  
+C:\Users\feng-peng\Desktop\c_code\PaperCheck\PaperCheck\TextPreprocess.h(28,15): warning C4018: “<”: 有符号/无符号不匹配
+  (编译源文件“main.cpp”)
+  
+C:\Users\feng-peng\Desktop\c_code\PaperCheck\PaperCheck\TextPreprocess.h(39,15): warning C4018: “<”: 有符号/无符号不匹配
+  (编译源文件“main.cpp”)
+  
+C:\Users\feng-peng\Desktop\c_code\PaperCheck\PaperCheck\TextPreprocess.h(50,15): warning C4018: “<”: 有符号/无符号不匹配
+  (编译源文件“main.cpp”)
+  
+  PaperCheck.vcxproj -> C:\Users\feng-peng\Desktop\c_code\PaperCheck\x64\Debug\PaperCheck.exe
