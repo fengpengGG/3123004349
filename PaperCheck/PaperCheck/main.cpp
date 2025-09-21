@@ -32,10 +32,11 @@ int main(int argc, char* argv[])
 		vector<string> copied_words = TextPreprocess::process_text(copied_text);
 
 		//计算相似度
-		double similarity = check::calculate_similar(original_words, copied_words);
+		double similarity = Check::calculate_similarity(original_words, copied_words);
 
 		FileHandling::write_result(result_path,similarity);
 		
+		cout << "成功生成结果" << endl;
 		return 0;
 	}
 	catch (const exception& e) {

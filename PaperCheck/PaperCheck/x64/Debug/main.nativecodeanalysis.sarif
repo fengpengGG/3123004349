@@ -1,0 +1,59 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.39.33522.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/users/feng-peng/desktop/c_code/papercheck/papercheck/main.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "d1b6e1a8f60432b9115008e97e48c223738f358c8b66ad8e2bad7e43a6ea8ce0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/feng-peng/desktop/c_code/papercheck/papercheck/filehandling.h"
+          },
+          "hashes": {
+            "sha-256": "d5da21494d0f93bc38903875bb4485743b0781179d3079544295dfe09094ce1a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/feng-peng/desktop/c_code/papercheck/papercheck/textpreprocess.h"
+          },
+          "hashes": {
+            "sha-256": "f46b68c854b155a0e6448cd91da5a06fbd44d5a14d9f8bdc1467dc44dc93955c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/users/feng-peng/desktop/c_code/papercheck/papercheck/check.h"
+          },
+          "hashes": {
+            "sha-256": "88b12eb6a4c9b28b1211ddf7f392c5c46ae28e0fe7e4327196f4fd1e28e8e40d"
+          }
+        }
+      ]
+    }
+  ]
+}

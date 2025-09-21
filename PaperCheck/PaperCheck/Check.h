@@ -1,72 +1,64 @@
-#define _CRT_SECURE_NO_WARNINGS  1
+#pragma once
+#define _CRT_SECURE_NO_WARNINGS 1
 #pragma warning(disable:6031)
 
-#include<iostream>
-#include<cmath>
-#include<vector>
-#include<string>
-#include <unordered_map>//词频统计
-#include <unordered_set>//储存唯一元素
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
 
 using namespace std;
 
 /*
-
-将 “文本” 转换为 “数学向量”，再通过向量夹角衡量相似度：
-两个向量的夹角越小（余弦值越接近 1），说明文本用词越相似，内容相关性越高。
+采用了加权 Jaccard 系数算法
+ Jaccard 系数用于计算两个集合的相似度，公式为：J(A,B) = |A∩B| / |A∪B|
 
 */
 
-class check{
+class Check {
 public:
-	static double calculate_similar(const vector<string> word1, const vector<string> word2)
-	{
+	// 计算文本相似度
+	static double calculate_similarity(const vector<string>& words1, const vector<string>& words2) {
+		// 处理空文本情况
+		if (words1.empty() && words2.empty()) return 1.0;
+		if (words1.empty() || words2.empty()) return 0.0;
 
-		//建立词频映射
-		unordered_map<string, int> freq1 = get_word_f(word1);	
-		unordered_map<string, int> freq2 = get_word_f(word2);
+		// 统计词频
+		unordered_map<string, int> freq1, freq2;
+		for (const string& word : words1) freq1[word]++;
+		for (const string& word : words2) freq2[word]++;
 
-		//获取所有不重复的词
-		unordered_set<string> all_words;
-		for (const auto& pair : freq1) all_words.insert(pair.first);
-		for (const auto& pair : freq2) all_words.insert(pair.first);
+		// 计算交集和并集
+		double intersection = 0.0;
+		double union_set = 0.0;
 
-		//计算点积
-		double dot_product = 0.0;
-		//计算向量的平方
-		double norm1_sq = 0.0, norm2_sq = 0.0;
+		// 处理第一个文本中的词
+		for (const auto& pair : freq1) {
+			const string& word = pair.first;
+			int count1 = pair.second;
 
-		for (const string& word : all_words) {
-			int count1 = freq1.count(word) ? freq1[word] : 0;
-			int count2 = freq2.count(word) ? freq2[word] : 0;
-		
-
-			dot_product += count1 * count2;
-			norm1_sq += count1 * count1;
-			norm2_sq += count2 * count2;
+			if (freq2.find(word) != freq2.end()) {
+				// 交集取最小频次
+				intersection += min(count1, freq2[word]);
+				// 并集取最大频次
+				union_set += max(count1, freq2[word]);
+				// 从第二个文本中移除已处理的词
+				freq2.erase(word);
+			}
+			else {
+				// 只在第一个文本中出现的词
+				union_set += count1;
+			}
 		}
-		//计算模长
-		double norm1 = sqrt(norm1_sq);
-		double norm2 = sqrt(norm2_sq);
-		
-		if (norm1 == 0 || norm2 == 0)
-			return 0.0;
-		//返回余弦相似度
-		return dot_product / (norm1 * norm2);
-	}
-	
-	
 
-private:
-
-	//计算词频
-	static unordered_map<string, int>get_word_f(const vector<string>& words) {
-		unordered_map<std::string, int> f;
-		for (const string& word : words) {
-			f[word]++;
+		// 处理只在第二个文本中出现的词
+		for (const auto& pair : freq2) {
+			union_set += pair.second;
 		}
-		return f;
 
+		// 计算相似度
+		if (union_set == 0) return 0.0;
+		return intersection / union_set;
 	}
-
 };

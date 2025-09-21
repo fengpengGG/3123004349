@@ -1,46 +1,50 @@
-#define _CRT_SECURE_NO_WARNINGS  1
+#pragma once
+#define _CRT_SECURE_NO_WARNINGS 1
 #pragma warning(disable:6031)
 
-#include<iostream>
-#include <string>
 #include <fstream>
-#include <stdexcept> 
-#include <locale> //解决程序适应不同地区规则的问题
-#include <codecvt> //C++ 标准库中用于字符编码转换的头文件，主要提供了一组模板类，用于编码功能的转换
-
+#include <string>
+#include <stdexcept>
+#include <codecvt>
+#include <locale>
 
 using namespace std;
 
-class FileHandling
-{
+class FileHandling {
 public:
-	//读取文件内容。
-	static string read_file(const string& path) {  //路径
-		ifstream file(path, ios::in | ios::binary);
-		if (!file.is_open())
-			throw runtime_error("无法打开文件" + path); //抛出错误
+	// 读取文件内容（支持UTF-8编码）
+	static string read_file(const string& file_path) {
+		// 尝试打开文件
+		ifstream file(file_path, ios::binary);
+		if (!file.is_open()) {
+			throw runtime_error("无法打开文件: " + file_path);
+		}
 
-		//读取文件内容到字符串
-		string content((istreambuf_iterator<char>(file)),  //读取连续的字符
+		// 读取文件内容
+		string content((istreambuf_iterator<char>(file)),
 			istreambuf_iterator<char>());
 
-		file.close();
+		if (content.empty() && !file.eof()) {
+			throw runtime_error("读取文件失败: " + file_path);
+		}
+
 		return content;
 	}
 
-	// 写入结果到文件，保留两位小数
-	static void write_result(const string& path, double similarity) {
-		ofstream file(path);
+	// 写入结果（保留两位小数）
+	static void write_result(const string& file_path, double similarity) {
+		ofstream file(file_path);
 		if (!file.is_open()) {
-			throw runtime_error("无法创建输出文件: " + path);
+			throw runtime_error("无法创建结果文件: " + file_path);
 		}
 
-		// 设置输出精度为两位小数
+		// 确保结果在0-1之间，并保留两位小数
+		similarity = max(0.0, min(1.0, similarity));
 		file.precision(2);
 		file << fixed << similarity;
 
-		file.close();
+		if (!file.good()) {
+			throw runtime_error("写入结果文件失败: " + file_path);
+		}
 	}
-
-
 };
