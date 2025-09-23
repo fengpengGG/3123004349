@@ -26,7 +26,7 @@
             "analysisTarget"
           ],
           "hashes": {
-            "sha-256": "d1b6e1a8f60432b9115008e97e48c223738f358c8b66ad8e2bad7e43a6ea8ce0"
+            "sha-256": "58c8926b3821c9211b749a42c515d296a0e429c58de0c6aa1bdbfdeb86031d31"
           }
         },
         {
@@ -34,7 +34,7 @@
             "uri": "file:///c:/users/feng-peng/desktop/c_code/papercheck/papercheck/filehandling.h"
           },
           "hashes": {
-            "sha-256": "d5da21494d0f93bc38903875bb4485743b0781179d3079544295dfe09094ce1a"
+            "sha-256": "21f1a6559417e241c1e2323443f58eddc13f900c3cc67156bc0eb5d4dd021d5e"
           }
         },
         {
@@ -42,7 +42,7 @@
             "uri": "file:///c:/users/feng-peng/desktop/c_code/papercheck/papercheck/textpreprocess.h"
           },
           "hashes": {
-            "sha-256": "f46b68c854b155a0e6448cd91da5a06fbd44d5a14d9f8bdc1467dc44dc93955c"
+            "sha-256": "933ee0b4b3bbd0af65d200a9291d300b9ea1895b1548b892e5aa7c61365163cc"
           }
         },
         {
@@ -50,7 +50,7 @@
             "uri": "file:///c:/users/feng-peng/desktop/c_code/papercheck/papercheck/check.h"
           },
           "hashes": {
-            "sha-256": "88b12eb6a4c9b28b1211ddf7f392c5c46ae28e0fe7e4327196f4fd1e28e8e40d"
+            "sha-256": "639d9143f3ab7d627f5d6c0f0005d8af39f7a7dc76f3f0941c882588575ec795"
           }
         }
       ]

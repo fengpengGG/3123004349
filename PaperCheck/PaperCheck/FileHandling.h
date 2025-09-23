@@ -7,44 +7,61 @@
 #include <stdexcept>
 #include <codecvt>
 #include <locale>
-
+#include <cstddef>
 using namespace std;
 
 class FileHandling {
 public:
-	// 读取文件内容（支持UTF-8编码）
-	static string read_file(const string& file_path) {
-		// 尝试打开文件
-		ifstream file(file_path, ios::binary);
-		if (!file.is_open()) {
-			throw runtime_error("无法打开文件: " + file_path);
-		}
+    // 读取文件内容
+    static string read_file(const string& file_path) {
+        ifstream file(file_path, ios::binary);
+        if (!file.is_open()) {
+            throw runtime_error("无法打开文件: " + file_path);
+        }
 
-		// 读取文件内容
-		string content((istreambuf_iterator<char>(file)),
-			istreambuf_iterator<char>());
+        // 自定义8KB缓冲区
+        const size_t BUF_SIZE = 8 * 1024;
+        char* io_buf = new char[BUF_SIZE];
+        file.rdbuf()->pubsetbuf(io_buf, BUF_SIZE); // 绑定缓冲区到文件流
 
-		if (content.empty() && !file.eof()) {
-			throw runtime_error("读取文件失败: " + file_path);
-		}
+        // 读取内容（避免临时对象冗余）
+        string content;
+        content.reserve(BUF_SIZE * 16); // 预分配内存
+        char buf[BUF_SIZE];
+        while (file.read(buf, BUF_SIZE)) {
+            content.append(buf, BUF_SIZE);
+        }
+        // 读取剩余字节
+        content.append(buf, file.gcount());
 
-		return content;
-	}
+        // 释放资源+检查错误
+        delete[] io_buf;
+        if (content.empty() && !file.eof()) {
+            throw runtime_error("读取文件失败: " + file_path);
+        }
+        return content;
+    }
 
-	// 写入结果（保留两位小数）
-	static void write_result(const string& file_path, double similarity) {
-		ofstream file(file_path);
-		if (!file.is_open()) {
-			throw runtime_error("无法创建结果文件: " + file_path);
-		}
+    // 写入结果
+    static void write_result(const string& file_path, double similarity) {
+        ofstream file(file_path);
+        if (!file.is_open()) {
+            throw runtime_error("无法创建结果文件: " + file_path);
+        }
 
-		// 确保结果在0-1之间，并保留两位小数
-		similarity = max(0.0, min(1.0, similarity));
-		file.precision(2);
-		file << fixed << similarity;
+        // 确保相似度在0-1区间，保留两位小数
+        similarity = max(0.0, min(1.0, similarity));
+        file.precision(2);
+        file << fixed << similarity;
 
-		if (!file.good()) {
-			throw runtime_error("写入结果文件失败: " + file_path);
-		}
-	}
+        
+        file.flush();
+        if (!file.good()) {
+            throw runtime_error("写入结果文件失败: " + file_path);
+        }
+    }
+
+
+
 };
+	

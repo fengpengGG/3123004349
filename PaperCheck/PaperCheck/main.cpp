@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS  1
+ï»¿#define _CRT_SECURE_NO_WARNINGS  1
 #pragma warning(disable:6031)
 
 #include <stdio.h>
@@ -8,40 +8,39 @@
 #include"Check.h"
 using namespace std;
 
-
 int main(int argc, char* argv[])
 {
-	if (argc != 4) //Ò»¹²ÓÐÈý¸öÊäÈë£¬ËùÒÔargc = 4 
-	{
-		cout << "ÊäÈë´íÎó£¬ÇëÖØÐÂÊäÈë" << endl;
-		return 1;
-	}
+{
+if (argc != 4) //ä¸€å…±æœ‰ä¸‰ä¸ªè¾“å…¥ï¼Œæ‰€ä»¥argc = 4 
+	cout << "è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥" << endl;
+	return 1;
+}
 
-	string original_path = argv[1]; //Ô´ÎÄ¼þÂ·¾¶
-	string copied_path = argv[2];   //³­Ï®ÎÄ¼þÂ·¾¶
-	string result_path = argv[3];   //½á¹ûÎÄ¼þÂ·¾¶
+	string original_path = argv[1];
+	string copied_path = argv[2];
+	string result_path = argv[3];
 
 	try
 	{
-		//¶ÁÈ¡ÎÄ¼þ
-		string original_text = FileHandling::read_file(original_path);//Ô´ÎÄ¼þ
-		string copied_text = FileHandling::read_file(copied_path);	 //³­Ï®ÎÄ¼þ
+		//è¯»å–æ–‡ä»¶
+		string original_text = FileHandling::read_file(original_path);//æºæ–‡ä»¶
+		string copied_text = FileHandling::read_file(copied_path);	 //æŠ„è¢­æ–‡ä»¶
 
-		//ÎÄ±¾Ô¤´¦ÀíºÍ·Ö´Ê
+		//æ–‡æœ¬é¢„å¤„ç†å’Œåˆ†è¯
 		vector<string> original_words = TextPreprocess::process_text(original_text);
 		vector<string> copied_words = TextPreprocess::process_text(copied_text);
 
-		//¼ÆËãÏàËÆ¶È
+		//è®¡ç®—ç›¸ä¼¼åº¦
 		double similarity = Check::calculate_similarity(original_words, copied_words);
 
-		FileHandling::write_result(result_path,similarity);
-		
-		cout << "³É¹¦Éú³É½á¹û" << endl;
+		FileHandling::write_result(result_path, similarity);
+
+		cout << "æˆåŠŸç”Ÿæˆç»“æžœ" << endl;
+		system("pause");
 		return 0;
 	}
 	catch (const exception& e) {
-		cout << "´íÎó: " << e.what() << endl;
+		cout << "é”™è¯¯: " << e.what() << endl;
 		return 1;
 	}
 }
-
